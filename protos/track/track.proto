@@ -1,0 +1,44 @@
+syntax = "proto3";
+
+package track;
+
+option go_package = "generate/tracks";
+
+service TrackService {
+  rpc Create(Track) returns (Void);
+  rpc Get(FilterRequest) returns (TracksRes);
+  rpc GetByID(TrackId) returns (TrackRes);
+  rpc Update(Track) returns (Void);
+  rpc Delete(TrackId) returns (Void);
+}
+
+message Void {}
+
+message Track{
+  string compositionID = 1;
+  string userID = 2;
+  string title = 3;
+  string fileUrl = 4;
+}
+
+message TrackId {
+  string trackId = 1;
+}
+
+message FilterRequest {
+  string query = 1;
+  repeated string arr = 2;
+}
+
+message TrackRes {
+  string trucId= 1;
+  string compositionID = 2;
+  string userID = 3;
+  string title = 4;
+  string fileUrl = 5;
+  string createIt = 6;
+}
+
+message TracksRes {
+  repeated TrackRes tracks = 1;
+}

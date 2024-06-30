@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package composition;
+
+option go_package = "generate/composition";
+
+service CompositionService{
+  rpc Create(Composition) returns (Void);
+  rpc Get(FilterRequest) returns (CompositionsRes);
+  rpc GetByID(CompositionId) returns (CompositionRes);
+  rpc GetByUserID(UserId) returns (CompositionRes);
+  rpc Update(Composition) returns (Void);
+  rpc Delete(CompositionId) returns (Void);
+}
+
+message Composition{
+  string userId = 1;
+  string title = 2;
+  string description = 3;
+  string status = 4;
+}
+
+message Void {}
+
+message FilterRequest{
+  string query = 1;
+  repeated string arr = 2;
+}
+
+message CompositionRes{
+  string compositionID = 1;
+  string userId = 2;
+  string title = 3;
+  string description = 4;
+  string status = 5;
+  string createAt = 6;
+}
+
+message CompositionsRes{
+  repeated CompositionRes compositions = 1;
+}
+
+message CompositionId{
+  string compositionID = 1;
+}
+message UserId{
+  string userID = 1;
+}
