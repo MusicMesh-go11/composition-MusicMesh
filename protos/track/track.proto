@@ -31,12 +31,12 @@ message FilterRequest {
 }
 
 message TrackRes {
-  string trucId= 1;
+  string tracId= 1;
   string compositionID = 2;
   string userID = 3;
   string title = 4;
   string fileUrl = 5;
-  string createIt = 6;
+  string createAt = 6;
 }
 
 message TracksRes {
