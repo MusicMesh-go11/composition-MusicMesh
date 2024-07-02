@@ -8,7 +8,8 @@ service TrackService {
   rpc Create(Track) returns (Void);
   rpc Get(FilterRequest) returns (TracksRes);
   rpc GetByID(TrackId) returns (TrackRes);
-  rpc Update(Track) returns (Void);
+  rpc GetBuCompositionId(CompositionID) returns (TrackRes);
+  rpc Update(TrackRes) returns (Void);
   rpc Delete(TrackId) returns (Void);
 }
 
@@ -37,6 +38,10 @@ message TrackRes {
   string title = 4;
   string fileUrl = 5;
   string createAt = 6;
+}
+
+message CompositionID{
+  string compositionID = 1;
 }
 
 message TracksRes {
