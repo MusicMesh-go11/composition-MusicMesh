@@ -1,7 +1,7 @@
 package tracks
 
 import (
-	pb "MusicMesh/composition-MusicMesh/generate/track"
+	pb "MusicMesh/composition-MusicMesh/generate/tracks"
 	"database/sql"
 )
 
@@ -10,6 +10,6 @@ type TrackRepo struct {
 	DB *sql.DB
 }
 
-func NewTrackRepo(db *sql.DB) *TrackRepo{
+func NewTrackRepo(db *sql.DB) *TrackRepo {
 	return &TrackRepo{DB: db}
 }
