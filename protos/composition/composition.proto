@@ -6,10 +6,9 @@ option go_package = "generate/composition";
 
 service CompositionService{
   rpc Create(Composition) returns (Void);
-  rpc Get(FilterRequest) returns (CompositionsRes);
   rpc GetByID(CompositionId) returns (CompositionRes);
-  rpc GetByUserID(UserId) returns (CompositionRes);
-  rpc Update(Composition) returns (Void);
+  rpc GetByUserID(UserId) returns (CompositionsRes);
+  rpc Update(CompositionRes) returns (Void);
   rpc Delete(CompositionId) returns (Void);
 }
 
@@ -20,12 +19,11 @@ message Composition{
   string status = 4;
 }
 
-message Void {}
-
-message FilterRequest{
-  string query = 1;
-  repeated string arr = 2;
+message CompositionsRes{
+  repeated CompositionRes Compositions = 1;
 }
+
+message Void {}
 
 message CompositionRes{
   string compositionID = 1;
@@ -34,10 +32,6 @@ message CompositionRes{
   string description = 4;
   string status = 5;
   string createAt = 6;
-}
-
-message CompositionsRes{
-  repeated CompositionRes compositions = 1;
 }
 
 message CompositionId{

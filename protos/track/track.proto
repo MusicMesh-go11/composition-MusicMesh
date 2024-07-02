@@ -6,14 +6,17 @@ option go_package = "generate/tracks";
 
 service TrackService {
   rpc Create(Track) returns (Void);
-  rpc Get(FilterRequest) returns (TracksRes);
   rpc GetByID(TrackId) returns (TrackRes);
-  rpc GetBuCompositionId(CompositionID) returns (TrackRes);
+  rpc GetBuCompositionId(CompositionID) returns (TracksRes);
   rpc Update(TrackRes) returns (Void);
   rpc Delete(TrackId) returns (Void);
 }
 
 message Void {}
+
+message TracksRes {
+  repeated TrackRes Tracks = 1;
+}
 
 message Track{
   string compositionID = 1;
@@ -24,11 +27,6 @@ message Track{
 
 message TrackId {
   string trackId = 1;
-}
-
-message FilterRequest {
-  string query = 1;
-  repeated string arr = 2;
 }
 
 message TrackRes {
@@ -42,8 +40,4 @@ message TrackRes {
 
 message CompositionID{
   string compositionID = 1;
-}
-
-message TracksRes {
-  repeated TrackRes tracks = 1;
 }

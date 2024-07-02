@@ -1,4 +1,4 @@
-package tracks
+package track
 
 import (
 	pb "MusicMesh/composition-MusicMesh/generate/tracks"
