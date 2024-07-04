@@ -12,9 +12,9 @@ func (t *TrackRepo) Create(ctx context.Context, in *pb.Track) (*pb.Void, error) 
 }
 
 func (t *TrackRepo) GetByID(ctx context.Context, in *pb.TrackId) (*pb.TrackRes, error) {
-	row := t.DB.QueryRow("SELECT track_id, composition_id, user_id, title, file_url, created_at, updated_at FROM tracks WHERE track_id = $1 AND deleted_at = 0", in.TrackId)
+	row := t.DB.QueryRow("SELECT track_id, composition_id, user_id, title, file_url FROM tracks WHERE track_id = $1 AND deleted_at = 0", in.TrackId)
 	track := &pb.TrackRes{}
-	err := row.Scan(&track.TracId, &track.CompositionID, &track.UserID, &track.Title, &track.FileUrl, &track.CreateAt)
+	err := row.Scan(&track.TracId, &track.CompositionID, &track.UserID, &track.Title, &track.FileUrl)
 	if err != nil {
 		return nil, err
 	}
@@ -22,7 +22,7 @@ func (t *TrackRepo) GetByID(ctx context.Context, in *pb.TrackId) (*pb.TrackRes, 
 }
 
 func (t *TrackRepo) GetByCompositionID(ctx context.Context, in *pb.CompositionID) (*pb.TracksRes, error) {
-	rows, err := t.DB.Query("SELECT track_id, composition_id, user_id, title, file_url, created_at, updated_at FROM tracks WHERE composition_id = $1 AND deleted_at = 0", in.CompositionID)
+	rows, err := t.DB.Query("SELECT track_id, composition_id, user_id, title, file_url FROM tracks WHERE composition_id = $1 AND deleted_at = 0", in.CompositionID)
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func (t *TrackRepo) GetByCompositionID(ctx context.Context, in *pb.CompositionID
 	tracks := &pb.TracksRes{}
 	for rows.Next() {
 		track := &pb.TrackRes{}
-		err = rows.Scan(&track.TracId, &track.CompositionID, &track.UserID, &track.Title, &track.FileUrl, &track.CreateAt)
+		err = rows.Scan(&track.TracId, &track.CompositionID, &track.UserID, &track.Title, &track.FileUrl)
 		if err != nil {
 			return nil, err
 		}
