@@ -23,9 +23,9 @@ func (c *CompositionRepo) Create(ctx context.Context, in *pb.Composition) (*pb.V
 }
 
 func (c *CompositionRepo) GetByID(ctx context.Context, in *pb.CompositionId) (*pb.CompositionRes, error) {
-	row := c.DB.QueryRow("SELECT composition_id, user_id, title, description, status FROM compositions WHERE composition_id = $1 AND deleted_at = 0", in.CompositionID)
+	row := c.DB.QueryRow("SELECT composition_id, user_id, title, description, status, created_at, updated_at FROM compositions WHERE composition_id = $1 AND deleted_at = 0", in.CompositionID)
 	comp := &pb.CompositionRes{}
-	err := row.Scan(&comp.CompositionID, &comp.UserId, &comp.Title, &comp.Description, &comp.Status)
+	err := row.Scan(&comp.CompositionID, &comp.UserId, &comp.Title, &comp.Description, &comp.Status, &comp.CreateAt, &comp.UpdatedAt)
 	if err != nil {
 		return nil, err
 	}
@@ -42,7 +42,7 @@ func (c *CompositionRepo) GetByUserID(ctx context.Context, in *pb.UserId) (*pb.C
 	compositions := &pb.CompositionsRes{}
 	for rows.Next() {
 		comp := &pb.CompositionRes{}
-		err = rows.Scan(&comp.CompositionID, &comp.UserId, &comp.Title, &comp.Description, &comp.Status, &comp.CreateAt)
+		err = rows.Scan(&comp.CompositionID, &comp.UserId, &comp.Title, &comp.Description, &comp.Status, &comp.CreateAt, &comp.UpdatedAt)
 		if err != nil {
 			return nil, err
 		}

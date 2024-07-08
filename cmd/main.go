@@ -18,6 +18,8 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	defer conn.Close()
+
 	db, err := postgres.Conn()
 	if err != nil {
 		panic(err)
