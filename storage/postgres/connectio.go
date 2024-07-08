@@ -10,8 +10,8 @@ const (
 	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
-	password = "BEKJONS"
-	dbname   = "compositions_m"
+	password = "123321"
+	dbname   = "composition_m"
 )
 
 func Conn() (*sql.DB, error) {

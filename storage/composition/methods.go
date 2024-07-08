@@ -2,11 +2,22 @@ package compositions
 
 import (
 	pb "MusicMesh/composition-MusicMesh/generate/composition"
+	"MusicMesh/composition-MusicMesh/generate/user"
 	"context"
+	"errors"
+	"fmt"
 )
 
 func (c *CompositionRepo) Create(ctx context.Context, in *pb.Composition) (*pb.Void, error) {
-	_, err := c.DB.Exec(`INSERT INTO compositions (user_id, title, description, status)
+	u, err := c.User.GetByID(ctx, &user.UserId{Id: in.UserId})
+	if err != nil {
+		fmt.Println(err)
+		return nil, err
+	}
+	if u.UserID == "" {
+		return nil, errors.New("this user net found")
+	}
+	_, err = c.DB.Exec(`INSERT INTO compositions (user_id, title, description, status)
 	VALUES ($1, $2, $3, $4)`, in.UserId, in.Title, in.Description, in.Status)
 	return &pb.Void{}, err
 }

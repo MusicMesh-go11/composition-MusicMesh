@@ -7,11 +7,17 @@ import (
 	"MusicMesh/composition-MusicMesh/storage/postgres"
 	track "MusicMesh/composition-MusicMesh/storage/tracks"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"log"
 	"net"
 )
 
 func main() {
+
+	conn, err := grpc.NewClient(":5051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		panic(err)
+	}
 	db, err := postgres.Conn()
 	if err != nil {
 		panic(err)
@@ -25,7 +31,7 @@ func main() {
 	defer listner.Close()
 
 	server := grpc.NewServer()
-	c := compositions.NewCompositionRepo(db)
+	c := compositions.NewCompositionRepo(db, conn)
 	t := track.NewTrackRepo(db)
 
 	composition.RegisterCompositionServiceServer(server, c)
